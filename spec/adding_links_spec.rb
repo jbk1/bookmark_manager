@@ -12,11 +12,22 @@ feature "User adds a new link" do
 		expect(link.title).to eq("Makers Academy")
 	end
 
+	scenario "with a few tags" do
+		visit "/"
+		add_link("http://www.makersacademy.com/", "Makers Academy", ['education', 'ruby'])
+		link = Link.first
+		expect(link.tags.map(&:text)).to include("education")
+		expect(link.tags.map(&:text)).to include("ruby")
+
+	end
+
 # why is this method being defined within the spec file?
-	def add_link(url, title)
+	def add_link(url, title, tags = [])
 		within('#new-link') do
 			fill_in 'url', :with => url
 			fill_in 'title', :with => title
+			#our tags wil be space separated. (is this a good idea? better to have a more visually obvious/contrasting separator?)
+			fill_in 'tags', :with => tags.join(' ') 
 			click_button 'Add link'
 		end
 	end
