@@ -38,3 +38,18 @@ Link.create(:url => url, :title => title, :tags => tags)
 redirect to('/')
 end
 
+get '/tags/:text' do
+	tag = Tag.first(:text => params[:text])
+	@links = tag ? tag.links : []
+	erb :index
+end
+ # surely this completely overwrites @link variable and really we just want to be doing an equality comparison? 
+# if @links = tag
+# 	tag.links
+# else
+# 	[]
+# end
+
+# @links = tag ? tag.links : []
+
+
