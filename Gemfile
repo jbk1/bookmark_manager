@@ -11,4 +11,5 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
+  gem 'rack-flash3', '~> 1.0.5'
 end
