@@ -4,5 +4,7 @@ class User
 
 	property :id, Serial
 	property :email, String
+	property :password, Text
+
 
 end

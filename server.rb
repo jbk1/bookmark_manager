@@ -1,12 +1,14 @@
 require 'sinatra'
 require 'data_mapper'
 env = ENV["RACK_ENV"] || "development"
+enable :sessions
 # we're telling datamapper to use a postgres database on localhost. 
 # The name will be "bookmark_manager_test" or "bookmark_manager_development" 
 # depending on the environment
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 
 require './lib/link' # this needs to be done after datamapper is initialised
+require './lib/user.rb'
 
 # After declaring your models, you should finalise them
 DataMapper.finalize
@@ -50,6 +52,25 @@ end
 # 	[]
 # end
 
-# @links = tag ? tag.links : []
+# @links = (tag ? tag.links : [])
+
+get '/new' do
+	erb :"new"
+end
+
+post '/users' do
+	user = User.create(:email => params[:email],
+							:password => params[:password])
+	session[:user_id] = user.id
+	redirect to('/')
+end
+
+helpers do
+
+def current_user  
+    @current_user ||=User.get(session[:user_id]) if session[:user_id]
+end
+
+end
 
 
