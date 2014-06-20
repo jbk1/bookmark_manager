@@ -64,7 +64,7 @@ end
 
 get '/new' do
 	@user = User.new
-	erb :"new"
+	erb :new
 end
 
 post '/users' do
@@ -75,8 +75,9 @@ post '/users' do
 		session[:user_id] = @user.id
 		redirect to('/')
 	else
-		flash[:notice] = "Sorry, your passwords don't match"
-		erb :"/new"
+		flash.now[:errors] = @user.errors.full_messages
+		erb :new	
+
 	end
 end
 
