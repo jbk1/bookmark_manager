@@ -2,6 +2,11 @@ require 'sinatra'
 require 'data_mapper'
 env = ENV["RACK_ENV"] || "development"
 enable :sessions
+set :session_secret, 'super secret'
+
+
+
+
 # we're telling datamapper to use a postgres database on localhost. 
 # The name will be "bookmark_manager_test" or "bookmark_manager_development" 
 # depending on the environment
@@ -52,7 +57,7 @@ end
 # 	[]
 # end
 
-# @links = (tag ? tag.links : [])
+# @links = (tag ? tag.links : []) ?????
 
 get '/new' do
 	erb :"new"
@@ -65,6 +70,7 @@ post '/users' do
 	redirect to('/')
 end
 
+# this is a sinatra helper method.
 helpers do
 
 def current_user  
