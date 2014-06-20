@@ -1,3 +1,4 @@
+
 require 'spec_helper'
 
 feature "User signs up" do
@@ -20,7 +21,7 @@ feature "User signs up" do
 
 # this is a 'helper' method for Datamapper
 	
-	scenario "with a password that doesn't match" do 
+	scenario "with an unmatching password & doesn't save to db" do 
 		lambda { sign_up('a@a.com', 'pass', 'wrong') }.should change(User, :count).by(0)
 	end
 
